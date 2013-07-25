@@ -1,0 +1,79 @@
+{% extends "timeline.html" %}
+{% load discucion_tags %}
+{% load com_tags %}
+{% block contenido%}
+{% for pub in grupo.grupo_publicaciones.all %}
+            <div class="innerLR">
+                <div class="row-fluid">
+                    <div class="span12">
+			<div class="widget">
+				<div class="widget-head"><h4 class="heading glyphicons conversation"><i></i>Publicacion</h4></div>
+				<div class="widget-body" id="p-{{pub.id}}">
+				  
+					<div class="media">
+						<img class="media-object pull-{%if pub.es_empresa %}right{%else%}left{%endif%}" src="{%if pub.es_empresa %}{% image_url proyecto.empresa "avatar" %}{%else%}{% image_url pub.publisher.interesado "avatar" %}{%endif%}" alt="">
+						<div class="media-body{%if pub.es_empresa %}-right{%endif%}">
+							<blockquote {%if pub.es_empresa %}class="pull-right"{%endif%}>
+								  <p>{{pub.contenido}}</p>
+								  <small><a href="#" title="">{{ pub.publisher.first_name }}</a><cite> | {%if pub.es_empresa %}{{ pub.publisher.interesado.empresa }} {%else%} {% grupo_interes pub.publisher.interesado proyecto %}{%endif%}</cite></small>
+							</blockquote>
+						</div>
+					</div>
+				      {% for comm in pub.comentarios.all%}
+					<div class="media">
+						<img class="media-object pull-{%if comm.es_empresa %}right{%else%}left{%endif%}" src="{%if comm.es_empresa %}{% image_url proyecto.empresa "avatar" %}{%else%}{% image_url comm.autor.interesado "avatar" %}{%endif%}" alt="">
+						<div class="media-body">
+							<blockquote class="pull{%if comm.es_empresa %}-right{%endif%}">
+								   <p>{{comm.contenido}}</p>
+								  <small><a href="#" title="">{{ comm.autor.first_name }}</a><cite> | {%if comm.es_empresa %}{{ comm.autor.interesado.empresa }} {%else%} {% grupo_interes comm.autor.interesado proyecto %}{%endif%}</cite></small>
+							</blockquote>
+						</div>
+					</div>
+				      {% endfor%}
+					
+                                        <div class="media comment">
+						<img class="media-object pull-left" src="{%if user.interesado.empresa %}{% image_url user.interesado.empresa "avatar" %}{%else%}{% image_url user.interesado "avatar" %}{%endif%}" alt="">
+						<div class="media-body">
+							<textarea placeholder="Escribe aqui" name="content"></textarea>
+							<button class="comment-submit">Enviar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+            </div>
+        </div>
+	    {%endfor%}
+	    <div class="separator bottom last"></div>
+        <div class="">
+            <div class="">
+		<div class="span6 dopost" >
+			
+			
+			<div class="widget post" >
+				<div class="widget-head">
+					<h4 class="heading">Publicar</h4>
+					<a href="" class="details pull-right" id="ocultar-publicar">ocultar</a>
+				</div>
+				<div class="widget-body list products">
+				  <form method="POST" action=".">
+				    {% csrf_token%}
+				    <ul>
+					<li>
+						
+						<textarea placeholder="Escribe aqui" name="content" id="id_contenido"></textarea>
+					</li>
+					<li>
+						
+						<button>Enviar</button>
+					</li>
+					</ul>
+				  </form>
+					
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>
+{% endblock%}

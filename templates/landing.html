@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>Link RSA</title>
+	<meta name="description" content="Landing page for x. We do Y. Coming soon. Whatever.">
+
+	<!-- Google Web Fonts
+  ================================================== -->
+	<link href="http://fonts.googleapis.com/css?family=Lobster+Two:700|Bree+Serif|Muli" rel="stylesheet" type="text/css">
+
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS Stylesheets
+  ================================================== -->
+	<link rel="stylesheet" href="/media/css/resets.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="/media/css/style.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="/media/css/media-queries.css" type="text/css" media="screen">
+
+
+	<!--[if lt IE 9]>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+		<script src="assets/js/selectivizr.min.js"></script>
+	<![endif]-->
+
+	<!-- Javascript
+  ================================================== -->
+	<script type="text/javascript" async="" src="http://www.google-analytics.com/ga.js"></script><script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+    </head>
+<body id="containerall">
+
+	<header id="head">
+
+		<div class="inner">
+			<a href="#" class="logotext square"><h1>Link RSA</h1></a>
+			
+				{% if not user.is_authenticated %}
+    <div class="login-a pop_logion">
+        <a id="login" href="#">login</a>            
+    </div>
+    {% endif %}
+			    <div class="details right">
+				<div class="message">
+					<!-- Fading text. See core.js for list of words. -->
+					<p class="large">Ambiental + Social</p>
+
+					<!-- Static text -->
+					<!-- <p class="medium">We’re a small design studio passionate about brand, the web, and mobile experiences.</p> -->
+					<p class="small">Link RSA le permite a las empresas cumplir con sus compromisos sociales y ambientales, asi como incorporar nuevas y mejores practicas de RSE.<br />Permitiendoles interactuar con los distintos grupos de interesados, logrando acuerdos beneficiosos para ambas partes.</p>
+				</div>
+
+				<div class="calltoaction2">
+			      <a href="#proyectos">Ver Proyectos</a>
+			    </div>
+                                <div class="calltoaction">
+			      <a href="#registro">Registro</a>
+			      <p class="top">click para comenzar</p>
+			    </div>
+
+				<!-- Newsletter -->
+				<!-- <form class="newsletter" id="subscribe">
+					<input type="email" id="email" name="email" class="email" placeholder="Enter your email..." /> <button>Notify Me</button>
+					<p class="note">We won't spam you. Pinky swear.</p>
+				</form> -->
+
+			</div>
+		</div>
+
+		<!-- <div id="progress-back" class="load-item"><div id="progress-bar"></div></div> -->
+		<!-- <div id="countdown"></div> -->
+		<div class="contact_map" id="contact" >
+			
+		</div>
+
+	</header>
+
+	<section class="body">
+
+
+		<div class="inner">
+
+				<div id="extra">
+
+					<div class="block" id="proyectos">
+						<h2 class="heading"><span class="left"><strong>Proyectos</strong></span></h2>
+						
+						{% if form_paises != 'None' %}
+							<form id="id_paises"class="contact" action="/" method="POST">
+							    {% csrf_token %}
+							   <p class="small">Los siguientes proyectos estan ubicados en <strong> {{ form_paises.as_table  }}
+							</form>
+						{% endif %}
+						</strong></p>
+					{% if  proyectos %}
+						<ul class="features" lastid="0">
+                                                    {% for proyecto in proyectos %}
+                                                        <li>
+                                                            <a proy="{{proyecto.id}}" class="proy" href="#">
+								<img width="300px" height="300px" src="http://us.123rf.com/400wm/400/400/alexmit/alexmit1101/alexmit110100048/8781616-proyecto-de-word-con-engranajes-en-fondo-aislados-en-blanco.jpg">
+								<p>
+									<strong>{{proyecto.nombre}}</strong>
+								</p>
+                                                            </a>
+							</li>
+                                                    {% endfor %}
+						</ul>
+						<button id="prev" class="nextprev"> < </button>
+                                                <button id="next" class="nextprev"> > </button>
+					{% else %}
+					<ul class="features" lastid="0">
+					</ul>
+					{% endif %}
+							
+					</div>
+					<div class="block" id="registro">
+					    <h2 class="heading"><span class="left"><strong>Registro </strong></span></h2>
+
+						
+						
+						    <div class="form" >
+							<strong>Registro de Empresa:</strong>
+				
+							<form class="contact" action="/registro/" method="POST">
+							    {% csrf_token %}
+							    {{form_emp.as_table}}
+							    
+							    <button>Registrar</button>
+							
+							</form>
+							
+						    </div>
+						    <div class="form">
+							<strong>Registro de Persona:</strong>
+							<form class="contact" action="/usuarios/registro/" method="POST">
+							    {% csrf_token %}
+							    {{form_int.first_name}}
+							    {{form_int.last_name}}
+							    {{form_int.email}}
+							    {{form_int.password}}
+							    
+							    <button>Registrar</button>
+							</form>
+						    </div>
+						
+						
+						
+					</div>
+
+				    
+				</div>
+			
+				<div class="copyright">
+					<p> 2013 <a href="http://www.dcodesoft.com">Dcode soft</a></p>
+					<p></p>
+				</div>
+
+		</div>
+	</section>
+<div id="popupbg" class=""></div>
+<div id="all_popus">
+<div class="center_popup">
+<div class="popup go_invite ">
+    <div class="popupbox clearfix">
+            <div class="top clearfix">
+                    <a href="#" title="Close" class="close"><span class="icon _s"></span></a>
+            </div>
+            <div class="pop_content clearfix">
+                    
+	    </div>
+    </div>
+</div>
+</div>
+
+
+			
+			
+</div>
+	<script type="text/javascript" src="/media/js/core.js"></script>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-18148197-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+
+</body></html>

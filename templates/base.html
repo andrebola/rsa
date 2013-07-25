@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>Link RSA</title>
+	<meta name="description" content="Landing page for x. We do Y. Coming soon. Whatever.">
+
+	<!-- Google Web Fonts
+  ================================================== -->
+	<link href="http://fonts.googleapis.com/css?family=Lobster+Two:700|Bree+Serif|Muli" rel="stylesheet" type="text/css">
+
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS Stylesheets
+  ================================================== -->
+	<link rel="stylesheet" href="/media/css/resets.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="/media/css/style.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="/media/css/media-queries.css" type="text/css" media="screen">
+
+
+	<!--[if lt IE 9]>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+		<script src="assets/js/selectivizr.min.js"></script>
+	<![endif]-->
+
+	<!-- Javascript
+  ================================================== -->
+	<script type="text/javascript" async="" src="http://www.google-analytics.com/ga.js"></script><script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<link type="text/css" href="/media/css/menu.css" rel="stylesheet">
+	
+	<!--<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />-->
+	<!--<script src="http://code.jquery.com/jquery-1.9.1.js"></script>-->
+	</script><script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<!--<link rel="stylesheet" href="/resources/demos/style.css" />-->
+	{% block extra_head%}{% endblock%}
+    </head>
+<body id="containerall">
+
+	<header id="head">
+
+		<div class="inner">
+			<a href="/" class="logotext square base"><h1>Link RSA</h1></a>
+		{% if user.is_authenticated %}
+    <div class="login-a pop_logion" ">
+	
+        <a  href="{% url logout %}">logout</a>
+	
+    </div>
+    {% endif %}		
+		</div>
+
+		<!-- <div id="progress-back" class="load-item"><div id="progress-bar"></div></div> -->
+		<!-- <div id="countdown style="z-index: 9999;"></div> -->
+					
+    
+		<div class="contact_map" id="contact" >
+			
+		</div>
+
+	</header>
+
+	<section class="body base">
+	 
+
+    <div class="inner">
+	{% block menu%}
+        {% endblock%}
+    			<div id="extra">
+				    
+				    {% block content%}
+                                    {% endblock%}
+				    
+				</div>
+				
+
+				<div class="copyright">
+					<p> 2013 <a href="http://www.dcodesoft.com">Dcode Soft</a></p>
+					<p></p>
+				</div>
+
+		</div>
+	</section>
+
+
+
+			
+			
+</div>
+<div id="popupbg" class=""></div>
+<div id="all_popus">
+<div class="center_popup">
+<div class="popup go_invite ">
+    <div class="popupbox clearfix">
+            <div class="top clearfix">
+                    <a href="#" title="Close" class="close"><span class="icon _s"></span></a>
+            </div>
+            <div class="pop_content clearfix">
+                    
+	    </div>
+    </div>
+</div>
+</div>
+
+
+			
+			
+</div>
+</body></html>

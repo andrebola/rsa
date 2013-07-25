@@ -1,0 +1,94 @@
+{% extends "timeline.html" %}
+{% load com_tags %}
+
+{% block extra_head%}
+    <link type="text/css" href="/media/css/datepicker.css" rel="stylesheet">
+    {%endblock%}
+{% block contenido%}
+
+<div class="innerLR">
+    <div class="widget widget-activity">
+            <div class="widget-head">
+                    <h4 class="heading">Acuerdos</h4>
+            </div>
+            <div class="widget-body">
+    
+                    <div class="clearfix"></div>
+                    <ul class="activities">
+                        {% for acuerdo in grupo.acuerdos.all %}
+                                    
+                                    <li>
+                            <span class="titulo">{{acuerdo.titulo}}</span>
+                            
+                            <p>
+                                {%if acuerdo.fecha%}Fecha acordada: {{acuerdo.fecha|date:"d/m/Y"}}<br />{%endif%}
+                                {%if acuerdo.estado_problema%}Estado actual del problema: {{acuerdo.get_estado_problema_display}}<br />{%endif%}
+                                {{acuerdo.descripcion}}
+                            </p>
+                        </li>
+                        {%endfor%}
+                        
+                        
+                    </ul>
+                     {%if grupo.proyecto.empresa == user.interesado.empresa %}
+                     
+                        <div class=" crear-acuerdo">
+                            <form method="POST" action=".">
+                                {%csrf_token%}
+						<div class="control-group">
+							<label class="control-label">Titulo</label>
+							<div class="controls">
+                                                                {{form.titulo}}
+								
+							</div>
+						</div>
+                                                <div class="control-group">
+							<label class="control-label">Fecha</label>
+							<div class="controls">
+                                                                {{form.fecha}}
+								
+							</div>
+						</div>
+                                                <div class="control-group">
+							<label class="control-label">Estado Actual del Problema</label>
+							<div class="controls">
+                                                                {{form.estado_problema}}
+								
+							</div>
+						</div>
+                                                <div class="control-group">
+							<label class="control-label">Nivel de Criticidad</label>
+							<div class="controls">
+                                                                {{form.nivel_criticidad}}
+								
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label">Descripcion</label>
+							<div class="controls">
+								
+                                                                  {{form.descripcion}}
+								
+							</div>
+						</div>
+                                                <button>
+                                Enviar
+                            </button>
+                            </form>
+                        </div>
+                       {%endif%}
+                     <div class="clearfix"></div>
+                    
+            </div>
+    </div>
+</div>
+
+{% endblock%}
+{% block extra_js%}
+
+    <script type="text/javascript" src="/media/js/bootstrap-datepicker.js"></script>
+    {%endblock%}
+{% block extra_script%}
+    $('#id_fecha').datepicker();
+    {% endblock%}

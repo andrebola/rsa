@@ -1,0 +1,54 @@
+#logo
+{
+    margin-left:auto;
+    margin-right:auto;
+    background-image:url(/media/images/logoblanco.jpeg);
+width: 529px;
+   height: 145px;
+   margin-top: 130px;
+
+}
+img
+{
+      
+    margin-left:auto;
+margin-right:auto;
+    
+}
+
+#divTitle
+{
+    color:  #3F3F3F;
+    font-family: verdana,helvetica,arial,sans-serif;
+  
+    margin-left: auto;
+margin-right: auto;
+width: 400px;
+   text-align: center;
+}
+.footer {
+    background-color: #3F3F3F;
+    height: 50px;
+    position:absolute;
+    bottom: 0 !important;
+    width:100%;
+    background-image:url(/media/images/footer_bg.jpg);
+    background-repeat:repeat-x;
+    border-top: 3px white double;
+    color: white;
+    padding-top: 20px;
+    
+    
+}
+.foot_tel
+{
+    float: left;
+    margin: 0 20px 500px 374px;
+}
+.cont_footer
+{
+      margin-left: auto;
+margin-right: auto;
+width: 100%;
+ font-family: verdana,helvetica,arial,sans-serif;
+}

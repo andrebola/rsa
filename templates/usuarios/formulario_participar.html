@@ -1,0 +1,14 @@
+{% extends "base.html"%}
+{% block content%}
+                                    
+				    
+<div class="form">
+    <strong>Participar del Proyecto</strong>
+    <form class="contact" action="." method="POST">
+        {% csrf_token %}
+        <p class="small">Grupo de int&eacute;res:{{form.grupo_interes}}</p>
+        <p class="small">Nivel de inter&eacute;s:{{form.tipo_interes}}</p>
+        <button>Enviar</button>
+    </form>
+</div>
+{% endblock%}

@@ -1,0 +1,52 @@
+{% load com_tags %}
+<div class="presentacion">
+        <h1 class="heading"><span class="left"><strong>{{proyecto.nombre}}</strong></span></h1>
+        <img />
+        {%if user.is_authenticated %}{%if proyecto in user.interesado.proyectos_interes.all or user.interesado.empresa = proyecto.empresa %}<a href="{% url discucion_gral proyecto.slug %}"><div class="perfil-unirse" >Entrar al Proyecto</div></a>{% else %}<a href="{% url participar proyecto.slug %}"><div class="perfil-unirse" >Participar del proyecto</div></a>{% endif %}{% endif %}
+    <div class="breve">
+        {%if proyecto.etapa%}Etapa: {{proyecto.get_etapa_display}}<br />{%endif%}
+        {%if proyecto.clasificacion%}Clasificaci&oacute;n: <strong>{{proyecto.get_clasificacion_display}}</strong><br />{%endif%}
+        {{proyecto.descripcion}}
+    </div>
+    
+</div>
+<div class="central">
+    <ul >
+        <li class="imagen">
+            <img src="{% if proyecto.avatar %}{% photo_image_url proyecto "avatar" 420 %}{% endif %}"/>
+        
+        </li>
+        {% if proyecto.video%}
+        <li class="video">
+            <iframe width="420" height="315" src="http://www.youtube.com/embed/{{proyecto.video}}" frameborder="0" allowfullscreen></iframe>
+        
+        </li>
+        {% endif%}
+        <li class="mapa">
+            
+                
+        </li>
+        
+        
+    </ul>
+</div>
+{% if acuerdos|length > 1 %}
+<div class="compromisos">
+    <h2 class="heading"><span class="left"><strong>Compromisos Asumidos</strong></span></h2>
+    
+    <ul >
+        {% for acuerdo in acuerdos %}
+        <li >
+            {{acuerdo}}   
+        </li>
+        {% endfor%}
+    </ul>
+    
+</div>
+{% endif%}
+<div class="mas-info">
+    <h2 class="heading"><span class="left"><strong>Mas info</strong></span></h2>
+    Empresa:{{proyecto.empresa}}<br/>
+    Lugar:{{proyecto.lugar}}
+</div>
+

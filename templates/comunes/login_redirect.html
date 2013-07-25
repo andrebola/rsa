@@ -1,0 +1,33 @@
+
+{% extends "base.html"%}
+
+{% load i18n %}
+
+{% block content%}
+<h1 style="padding-top: 28px;">Iniciar sesi&oacute;n</h1>
+
+
+<form class="contact" action="/login/" method="POST" style="padding: 10px;">
+        {% csrf_token %}
+
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+         {{ form.email }}
+          <span class="error_cont">{{ form.email.errors }}</span>
+        {{ form.password }}
+        <span class="error_cont">{{ form.password.errors }}</span>
+        {{ form.remember }}<br />
+        
+        <button>Ingresar</button>
+</form>
+
+
+    <link rel="stylesheet" href="/media/css/resets.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="/media/css/style.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="/media/css/media-queries.css" type="text/css" media="screen">
+
+<script type="text/javascript">
+    $("#id_email").focus();
+</script>
+{% endblock %}

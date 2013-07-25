@@ -1,0 +1,31 @@
+
+
+
+
+{% extends "base.html"%}
+{% block extra_head%}<script src="/media/js/dynamic.formset.js"></script>{% endblock%}
+{% block content%}
+                                    
+ <div class="form">
+    <strong>Datos de la empresa:</strong>
+    <form class="contact" action="/registro/paso2/{{empresa.id}}/" enctype="multipart/form-data" method="POST">
+        {% csrf_token %}
+	
+	
+        {{empresa_form.nombre}}
+	
+	
+        {{empresa_form.descripcion}}
+	
+	<p class="small">
+	    Logo de la empresa:
+        {{empresa_form.avatar}}
+	</p>
+        
+        <button>Finalizar</button>
+    </form>
+</div>
+
+
+{% endblock%}
+ 

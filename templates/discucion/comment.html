@@ -1,0 +1,11 @@
+{% load com_tags %}
+{% load discucion_tags %}
+<div class="media">
+        <img class="media-object pull-{%if comm.es_empresa %}right{%else%}left{%endif%}" {% image_url comm.autor.interesado "avatar" %} alt="">
+        <div class="media-body">
+                <blockquote class="pull{%if comm.es_empresa %}-right{%endif%}">
+                          <p>{{comm.contenido}}</p>
+                          <small><a href="#" title="">{{ comm.autor.first_name }}</a><cite> | {%if comm.es_empresa %}{{ comm.autor.interesado.empresa }} {%else%} {% grupo_interes comm.autor.interesado proyecto %}{%endif%}</cite></small>
+                </blockquote>
+        </div>
+</div>

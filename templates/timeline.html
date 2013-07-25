@@ -1,0 +1,163 @@
+{% load com_tags %}
+<html style="" class=" js csstransforms3d csstransitions"><!--<![endif]--><head>
+	<title>Link RSA</title>
+	
+	<!-- Meta -->
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	
+	<!-- Bootstrap -->
+	<link href="/media/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/media/css/bootstrap-responsive.min.css" rel="stylesheet">
+	
+	<!-- JQuery v1.8.2 -->
+	<script type="text/javascript" async="" src="http://www.google-analytics.com/ga.js"></script>
+        <script src="/media/js/jquery-1.7.2.min.js"></script>
+        <script src="/media/js/jquery.autogrowtextarea.js"></script>
+
+	
+	<!-- Theme -->
+            <link type="text/css" href="/media/css/timeline.css" rel="stylesheet">
+	
+	<!-- FireBug Lite -->
+	<!-- <script type="text/javascript" src="https://getfirebug.com/firebug-lite-debug.js"></script> -->
+	
+	<!-- Google Analytics -->
+	<script type="text/javascript">
+
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-36057737-1']);
+	  _gaq.push(['_trackPageview']);
+	
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	
+	</script>
+	
+	
+	<!--[if IE]><script type="text/javascript" src="theme/scripts/excanvas/excanvas.js"></script><![endif]-->
+	<!--[if lt IE 8]><script type="text/javascript" src="theme/scripts/json2.js"></script><![endif]-->
+	{% block extra_head%}{% endblock%}
+</head>
+<body>
+	
+	<!-- Start Content -->
+	<div class="container-fluid">
+		
+		<div class="navbar main">
+			<a href="/" class="appbrand"><span>Link RSA</span></a>
+		</div>
+		
+				<div id="wrapper">
+		<div id="menu" class="hidden-phone">
+			<span class="profile">
+				<a class="img" href="index.php?lang=en&amp;page=my_account"><img src="{%if user.interesado.empresa %}{% image_url user.interesado.empresa "avatar" %}{%else%}{% image_url user.interesado "avatar" %}{%endif%}" alt="{{user.first_name}} {{user.last_name}}"></a>
+				<span>
+					<strong>{%if user.interesado.empresa %}{{user.interesado.empresa}}{%else%}{{user.first_name}} {{user.last_name}}{%endif%}</strong>
+					<a href="index.php?lang=en&amp;page=my_account">modificar datos</a>
+				</span>
+			</span>
+
+			<ul>
+			  {% for grupo_interesado in proyecto.grupos.all %}
+				<li class="hasSubmenu glyphicons home {%if grupo_interesado.id = grupo.id%}active{%endif%}">
+					<a data-toggle="collapse" href="#menu_index"><i></i><span>{{grupo_interesado.nombre}}</span></a>
+					<ul class="collapse in" id="menu_index">
+						<li class="{%if grupo_interesado.id = grupo.id and not pagina_acuerdos %}active{%endif%}"><a href="{% url discucion proyecto.slug grupo_interesado.slug%}"><span>Comentarios</span></a></li>
+						<li class="{%if grupo_interesado.id = grupo.id and pagina_acuerdos %}active{%endif%}"><a href="{% url acuerdos proyecto.slug grupo_interesado.slug%}"><span>Acuerdos</span></a></li>
+					</ul>
+					<span class="count">2</span>
+				</li>
+			  {% endfor%}
+				
+			</ul>
+			
+		</div>
+		<div id="content">
+		
+        <div class="separator top"></div>
+
+	
+	
+            
+	{%block contenido%}
+	{%endblock%}
+				<!-- End Content -->
+		</div>
+		<!-- End Wrapper -->
+		</div>
+				
+	</div>
+	
+
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+	
+	<!-- Bootstrap Script -->
+	<script src="/media/js/bootstrap.min.js"></script>
+	{% block extra_js%}{% endblock%}
+        <script>
+            $(document).ready(function() {
+                 $('textarea').autoGrow();
+             // main menu -> submenus
+                $('#menu .collapse').on('show', function() {
+                    $(this).parents('.hasSubmenu:first').addClass('active');
+                })
+                    .on('hidden', function() {
+                    $(this).parents('.hasSubmenu:first').removeClass('active');
+                });
+            
+                // main menu visibility toggle
+                $('.navbar.main .btn-navbar').click(function() {
+                    $('.container-fluid:first').toggleClass('menu-hidden');
+                    $('#menu').toggleClass('hidden-phone');
+            
+                    if (typeof masonryGallery != 'undefined') masonryGallery();
+                });
+                $(window).resize(function() {
+                    if (!$('#menu').is(':visible') && !$('.container-fluid:first').is('.menu-hidden') && !$('.container-fluid:first').is('.documentation') && !$('.container-fluid:first').is('.login')) $('.container-fluid:first').addClass('menu-hidden');
+                });
+            
+                $(window).resize();
+            
+                $('.btn-source-toggle').click(function(e) {
+                    e.preventDefault();
+                    $('.code').toggleClass('hide');
+                });
+            
+                $('#toggle-menu-position').on('change', function() {
+                    $('.container-fluid:first').toggleClass('menu-right');
+                    $.cookie('rightMenu', $(this).prop('checked') ? $(this).prop('checked') : null);
+                });
+		$('.comment-submit').click(function(){
+		  var id=$(this).closest('.widget-body').attr('id').split("-");
+		  var post_id=id[1];
+		  var textarea=$(this).closest('.media-body').find('textarea');
+		  var comment=$(this).closest('.comment');
+		  $.post('/intercambio/comentario/'+post_id+'/',
+			 {'comm':textarea.val(),
+			 'csrfmiddlewaretoken':"{{csrf_token}}",
+			 },function(resp){
+		    comment.before(resp);
+		    textarea.val('');
+		  });
+		  return false;
+		  });
+		$('#ocultar-publicar').click(function(e){
+		  
+		  $('.post .widget-body').toggle();
+		  return false;
+		  });
+		$('.activities li').click(function(e){
+		  $(this).find('p').toggle();
+		  return false;
+		  });
+		{% block extra_script%}{% endblock%}
+              });
+        </script>
+</body></html>

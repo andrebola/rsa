@@ -1,0 +1,313 @@
+{% extends "base.html"%}
+{% block menu%}
+<ul class="menu-base">
+<li id="mis_proyectos"><a href="#">Mis proyectos</a></li><li> |</li>
+	    
+<li id="todos_proyectos"><a href="#">Todos los proyectos</a></li><li> |</li>
+	     
+<li id="nuevo_proyecto"><a href="{% url nuevo_proyecto %}">Nuevo Proyecto</a></li>
+	    
+</ul>
+
+{% endblock%}
+{% block content%}
+       
+       <div id="form">	    
+		<form id="pais_form1" class="contact" action="{% url lista_proyectos 3 %}" method="POST">
+			    {% csrf_token %}
+			   <p class="small">Los siguientes proyectos estan ubicados en <strong> {{ form_paises.as_table  }}
+		</form>
+		</strong>
+		</p>
+	</div>
+       
+                                    				    
+
+	
+		<ul class="features" lastid="0">
+		   
+		    
+		</ul>
+	    
+	    <div id="paginado">
+	    <p class="small">Ver mas : </p>
+	    
+	    <button id="prev" class="nextprev"> < </button>
+            <button id="next" class="nextprev"> > </button>
+	    
+	    </div>
+	 
+
+<script>
+    
+    
+function add_proyect_to_template(resp) {
+    
+    obj = jQuery.parseJSON(resp);
+        var html='';
+        for (i=0 ; i< obj.length; i++) {   
+        html+='<li><a proy="'+obj[i].id+'"class="proy" href="/perfil-pro/'+obj[i].id+'"><img style="margin-bottom: 30px;" width="300px" height="200px" src="'+obj[i].avatar+'"><p><strong>'+obj[i].nombre+'</strong></p></a></li>';
+        if (!obj.length<1){$('ul.features').attr('lastid',obj[i].lastid);}    
+        }
+	
+    $('ul.features').html(html);
+}
+function get_proyectos(button) {
+      var obj;
+      
+    if (button.attr('id')=='prev') {
+        
+	if ($('ul.features li').length >= 1){
+	    
+	    id_proy=$('ul.features li:first a').attr('proy');
+	}
+        else id_proy=$('ul.features').attr('lastid');
+	
+        $.get('/ajax_proyectos/?pais='+$('#id_paises').find(":selected").val()+'&firstid='+id_proy,{},         
+        function(resp){
+            add_proyect_to_template(resp)
+        });return false;
+    }
+    else
+    {
+	
+        $.get('/ajax_proyectos/?pais='+$('#id_paises').find(":selected").val()+'&lastid='+$('ul.features li').last().find('a').attr('proy'),{},            
+        function(resp){
+            add_proyect_to_template(resp)            
+        });return false;    
+    }
+}
+
+
+
+function get_mis_proyectos(button) {
+    
+    var obj;  
+    if (button.attr('id')=='prev') {
+        
+
+	if ($('ul.features li').length >= 1){
+	    
+	    id_proy=$('ul.features li:first a').attr('proy');
+	}
+        else id_proy=$('ul.features').attr('lastid');
+        
+	$.get('/ajax_mis_proyectos/?firstid='+id_proy,{},         
+        function(resp){
+          
+            add_proyect_to_template(resp)            
+        });return false;   
+    }
+    else
+    {
+	
+        $.get('/ajax_mis_proyectos/?lastid='+$('ul.features li').last().find('a').attr('proy'),{},            
+        function(resp){
+          
+            add_proyect_to_template(resp)            
+        });return false;    
+	    
+         
+	    
+      
+    }
+}
+
+
+
+function initialize() {
+    
+    {% if not user.interesado.empresa %}
+    
+    
+    $('#nuevo_proyecto').prev().html('');    
+    $('#nuevo_proyecto a').css({ display: "none" });
+    
+    
+    {% endif %}
+    
+    {% if user.interesado.empresa.proyectos.count > 0  or user.interesado.proyectos_interes.count > 0 %}
+    
+	 $("#form").hide();
+	$("ul.menu-base li").each(function(){
+	    $(this).removeAttr('selected');
+	});
+	$('li#mis_proyectos').attr('selected','selected');
+	$.get('/ajax_mis_proyectos/?&lastid=0',{},            
+        function(resp){
+	     if (resp) {
+            html=add_proyect_to_template(resp);
+            $('ul.features').html(html);
+	     $('#paginado').show();
+         }else
+         {
+            $('ul.features').html('');
+	    $('#paginado').hide();
+         }
+                     
+        });return false; 
+    
+    
+    {% else %}
+    
+    $("#form").show();
+	$("ul.menu-base li").each(function(){
+	    $(this).removeAttr('selected');
+	});
+	$('li#todos_proyectos').attr('selected','selected');
+	$.get('/ajax_proyectos/?&lastid=0&pais='+$("#id_paises").find(":selected").val(),{},            
+        function(resp){
+	     if (resp) {
+            html=add_proyect_to_template(resp);
+            $('ul.features').html(html);
+	    $('#paginado').show();
+         }else
+         {
+            $('ul.features').html('');
+	    $('#paginado').hide();
+         }
+                     
+        });return false; 
+    
+    {% endif %}
+}
+
+function initialize_popup(proy) {
+        
+  
+   $.get('/perfil-pro/'+proy+'/',{},         
+        function(resp){
+        
+         $('#all_popus .pop_content').html(resp);
+         $('#all_popus').css('display','table');
+         $('#all_popus .center_popup').css('display','')
+         var position_top = $(document).scrollTop();
+         $('#all_popus').css('top',position_top);
+      
+          selected = $('#all_popus').find('.go_invite');
+          selected.css('display','inline-block');
+          var h_screen = $(window).height() -30;
+         selected.find('.viewport').css('height', h_screen-100);
+         selected.find('.wait .cont').css('height', h_screen-100);
+         selected.css('display','inline-block');
+         var alto = $(document).height()
+	$('body').css('overflow-y','hidden');
+	$('#popupbg').css('height',alto);
+	$('#popupbg').css('display','block');
+        
+     });
+}
+
+$('.proy').live('click',function(e){
+        
+    initialize_popup($(this).attr('proy'));
+    e.stopPropagation();
+    return false;
+});
+
+
+function close_popup(){
+          $('#all_popus').css('display','none');
+          $('#popupbg').css('display','none');
+          $('body').css('overflow-y','auto');
+          $('#playing_video').attr('src','')
+          $('#all_popus .pop_content').parent().parent().parent().css('display','none')
+  }
+
+$(document).ready(function() {
+   
+    $("#id_paises").change(function(){
+          $.get('/ajax_proyectos/?&lastid=0&pais='+$(this).find(":selected").val(),{},            
+        function(resp){
+	     if (resp) {
+            html=add_proyect_to_template(resp);
+            $('ul.features').html(html);
+	    $('#paginado').show();
+         }else
+         {
+	    
+	    
+            $('ul.features').html('');
+	    $('#paginado').hide();
+         }          
+        });return false; 
+    })
+    
+    
+    $('button.nextprev').click(function(e){			      
+    
+	
+	if ($('li[selected]').attr('id')=='mis_proyectos')
+	{
+	    get_mis_proyectos($(this));
+	    $("#form").hide();
+	    
+	}else{
+	    if($('li[selected]').attr('id')=='todos_proyectos')
+	    get_proyectos($(this));
+	    $("#form").show();
+	    }
+    }); 
+    $('#todos_proyectos').click(function(){
+	$("#form").show();
+	$("ul.menu-base li").each(function(){
+	    $(this).removeAttr('selected');
+	});
+	$(this).attr('selected','selected');
+	
+	$.get('/ajax_proyectos/?&lastid=0&pais='+$('#id_paises').find(":selected").val(),{},            
+        function(resp){
+	     if (resp) {
+            html=add_proyect_to_template(resp);
+            $('ul.features').html(html);
+	    $('#paginado').show();
+         }else
+         {
+	    	    
+            $('ul.features').html('');
+	    $('#paginado').hide();
+         }          
+        });return false; 
+
+    
+    });
+    
+    $('#mis_proyectos').click(function(){
+	$("#form").hide();
+	$("ul.menu-base li").each(function(){
+	    $(this).removeAttr('selected');
+	});
+	$(this).attr('selected','selected');
+	$.get('/ajax_mis_proyectos/?&lastid=0',{},            
+        function(resp){
+	     if (resp) {
+            html=add_proyect_to_template(resp);
+            $('ul.features').html(html);
+	    $('#paginado').show();
+         }else
+         {
+	    	    
+            $('ul.features').html('');
+	    $('#paginado').hide();
+         }          
+                   
+        });return false; 
+    
+    });
+    
+    initialize();
+    
+    $(document).click(function(e){
+    close_popup();
+});
+    
+
+    
+    
+}); 
+ 
+</script>
+
+
+
+{% endblock%}

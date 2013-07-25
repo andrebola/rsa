@@ -1,0 +1,44 @@
+
+
+
+{% extends "base.html"%}
+{% block extra_head%}<script src="/media/js/dynamic.formset.js"></script>{% endblock%}
+{% block content%}
+                                    
+
+ <div class="form">
+    <strong>Registro de Persona:</strong>
+    <form class="contact" action="/usuarios/registro/paso2/{{user.id}}/" enctype="multipart/form-data" method="POST">
+     {% csrf_token %}
+     
+	{{interesado_form.ocupacion}}
+        <p class="small" style="margin-bottom: 25px;">
+	Foto de perfil:
+	{{interesado_form.avatar}}
+        <p>
+	<p class="small" style="margin-bottom: 25px;">
+	Genero:
+	{{interesado_form.genero}}
+        <p>
+	<p class="small" style="margin-bottom: 25px;">
+	Edad:
+	{{interesado_form.edad}}
+        <p>
+	<p class="small" style="margin-bottom: 25px;">
+	Lugar:
+	{{interesado_form.lugar}}
+        <p>
+	{{interesado_form.direccion}}    
+	    
+        <button>Finalizar</button>
+    </form>
+</div>
+
+{% endblock%}
+ 
+
+
+
+
+
+

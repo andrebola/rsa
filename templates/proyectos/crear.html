@@ -1,0 +1,37 @@
+{% extends "base.html"%}
+{% block extra_head%}<script src="/media/js/dynamic.formset.js"></script>{% endblock%}
+{% block content%}
+                                    
+				    
+<div class="form-2">
+    <strong>Crear Proyecto</strong>
+    <form class="nuevo-proyecto" action="." enctype="multipart/form-data" method="POST">
+	<div class="form-col-izq">
+	    {% csrf_token %}
+	    {{form.nombre}}
+	    {{form.descripcion}}
+	    <p class="small">Avatar:</p>
+	    {{form.avatar}}
+	    <p class="small">Lugar:
+	    {{form.lugar}}</p>
+	    <p class="small">Etapa:
+	    {{form.etapa}}</p>
+	    <p class="small">Clasificaci&oacute;n:
+	    {{form.clasificacion}}</p>
+	</div>
+        <div class="form-col-der">
+	<p class="small">Grupos de Inter&eacute;s:
+	{{ g_interes_formSet.management_form }}
+	{% for forms in g_interes_formSet%}
+	    <div class="formset">{{forms.nombre}}</div>
+	{% endfor%}</p>
+	<p class="small">Grupos de Discuci&oacute;n:
+	{{ g_discucion_formSet.management_form }}
+	{% for forms in g_discucion_formSet%}
+	    <div class="formset_d">{{forms.nombre}}</div>
+	{% endfor%}</p>
+	</div>
+        <button>Enviar</button>
+    </form>
+</div>
+{% endblock%}
