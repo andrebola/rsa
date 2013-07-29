@@ -72,6 +72,8 @@ class Proyecto(Model):
     video = CharField('video',max_length=254,null=True, blank=True)    
     etapa=CharField(max_length=2, choices=ETAPAS_CHOICES)
     clasificacion=CharField(max_length=2, choices=CAT_CHOICES)
+    latitud = DecimalField('latitud', decimal_places=6, max_digits=9, null=True)
+    longitud = DecimalField('longitud', decimal_places=6, max_digits=9, null=True)
     
     #releated objects
     empresa = ForeignKey(Empresa, verbose_name=_('empresa'), related_name = 'proyectos')

@@ -47,6 +47,36 @@
 <div class="mas-info">
     <h2 class="heading"><span class="left"><strong>Mas info</strong></span></h2>
     Empresa:{{proyecto.empresa}}<br/>
-    Lugar:{{proyecto.lugar}}
-</div>
+    Lugar:{{proyecto.lugar}}<br />
+    {% if proyecto.latitud %}
+    <div id="more_map" style="width: 800px;height: 200px;" >
+        
+    </div>
+    
+<script>
+        $(document).ready(function(){
+                var latlng = new google.maps.LatLng({{proyecto.latitud|stringformat:"f"}},{{proyecto.longitud|stringformat:"f"}});
+        
+        
+        var myOptions = {
+            zoom: 7,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("more_map"), myOptions);
+        var marker = new google.maps.Marker({
+            position: latlng,
+            map: map,
+            title:"{{proyecto.nombre}}",
+            draggable:true,
+            animation: google.maps.Animation.DROP
+        });
+        
+    });
 
+        
+</script>
+
+
+    {% endif%}
+</div>

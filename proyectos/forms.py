@@ -54,6 +54,8 @@ class ProyectoForm(forms.ModelForm):
         super(ProyectoForm, self).__init__(*args, **kwargs)
         self.fields['nombre'].widget.attrs={'placeholder':_('Nombre*')}
         self.fields['descripcion'].widget.attrs={'placeholder':_('descripcion*')}
+        self.fields['latitud'].widget=forms.HiddenInput()
+        self.fields['longitud'].widget=forms.HiddenInput()
         
         
 class GrupoInteresForm(forms.ModelForm):

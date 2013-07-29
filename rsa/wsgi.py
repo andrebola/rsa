@@ -13,7 +13,11 @@ middleware here, or combine a Django application with an application of another
 framework.
 
 """
-import os
+import os,sys
+
+sys.path.append('/var/www/rsa/')
+activate_this = '/var/www/my-env/bin/activate_this.py'
+execfile(activate_this, dict(__file__=activate_this))
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "rsa.settings")
 

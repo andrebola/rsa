@@ -1,5 +1,10 @@
 {% extends "base.html"%}
-{% block extra_head%}<script src="/media/js/dynamic.formset.js"></script>{% endblock%}
+{% block extra_head%}
+<script src="/media/js/dynamic.formset.js"></script>
+
+<script src="http://www.google.com/jsapi?key="></script>
+<script src="/media/js/jquery.location_picker.js"></script>
+{% endblock%}
 {% block content%}
                                     
 				    
@@ -12,6 +17,8 @@
 	    {{form.descripcion}}
 	    <p class="small">Avatar:</p>
 	    {{form.avatar}}
+	    <p class="small">Video:
+	    {{form.video}}</p>
 	    <p class="small">Lugar:
 	    {{form.lugar}}</p>
 	    <p class="small">Etapa:
@@ -31,6 +38,12 @@
 	    <div class="formset_d">{{forms.nombre}}</div>
 	{% endfor%}</p>
 	</div>
+	<p class="small">Ubicaci&oacute;n:
+	    <div id="map">
+	    </div>
+	    {{form.latitud}}
+	    {{form.longitud}}
+	</p>
         <button>Enviar</button>
     </form>
 </div>

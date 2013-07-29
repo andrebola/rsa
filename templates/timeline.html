@@ -59,15 +59,15 @@
 				<a class="img" href="index.php?lang=en&amp;page=my_account"><img src="{%if user.interesado.empresa %}{% image_url user.interesado.empresa "avatar" %}{%else%}{% image_url user.interesado "avatar" %}{%endif%}" alt="{{user.first_name}} {{user.last_name}}"></a>
 				<span>
 					<strong>{%if user.interesado.empresa %}{{user.interesado.empresa}}{%else%}{{user.first_name}} {{user.last_name}}{%endif%}</strong>
-					<a href="index.php?lang=en&amp;page=my_account">modificar datos</a>
+					<a href="/editar_datos/">modificar datos</a>
 				</span>
 			</span>
 
 			<ul>
 			  {% for grupo_interesado in proyecto.grupos.all %}
 				<li class="hasSubmenu glyphicons home {%if grupo_interesado.id = grupo.id%}active{%endif%}">
-					<a data-toggle="collapse" href="#menu_index"><i></i><span>{{grupo_interesado.nombre}}</span></a>
-					<ul class="collapse in" id="menu_index">
+					<a data-toggle="collapse" href="#menu_index{{grupo_interesado.id}}"><i></i><span>{{grupo_interesado.nombre}}</span></a>
+					<ul class="collapse" id="menu_index{{grupo_interesado.id}}">
 						<li class="{%if grupo_interesado.id = grupo.id and not pagina_acuerdos %}active{%endif%}"><a href="{% url discucion proyecto.slug grupo_interesado.slug%}"><span>Comentarios</span></a></li>
 						<li class="{%if grupo_interesado.id = grupo.id and pagina_acuerdos %}active{%endif%}"><a href="{% url acuerdos proyecto.slug grupo_interesado.slug%}"><span>Acuerdos</span></a></li>
 					</ul>
@@ -112,13 +112,7 @@
                     $(this).parents('.hasSubmenu:first').removeClass('active');
                 });
             
-                // main menu visibility toggle
-                $('.navbar.main .btn-navbar').click(function() {
-                    $('.container-fluid:first').toggleClass('menu-hidden');
-                    $('#menu').toggleClass('hidden-phone');
-            
-                    if (typeof masonryGallery != 'undefined') masonryGallery();
-                });
+                
                 $(window).resize(function() {
                     if (!$('#menu').is(':visible') && !$('.container-fluid:first').is('.menu-hidden') && !$('.container-fluid:first').is('.documentation') && !$('.container-fluid:first').is('.login')) $('.container-fluid:first').addClass('menu-hidden');
                 });
